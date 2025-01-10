@@ -62,7 +62,6 @@
                                 <option value="tenant" {{ old('role') == 'tenant' ? 'selected' : '' }}>Tenant</option>
                                 <option value="landlord" {{ old('role') == 'landlord' ? 'selected' : '' }}>Landlord
                                 </option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                             </select>
                         </div>
 
