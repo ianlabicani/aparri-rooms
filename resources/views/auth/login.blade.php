@@ -53,10 +53,14 @@
                             <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                         </div>
                     </form>
+                    <div class="mt-4 text-center">
+                        Don't have an account?
+                        <a class="text-muted " href="{{ route('register') }}">
+                            Register Here
+                        </a>
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 @endsection
