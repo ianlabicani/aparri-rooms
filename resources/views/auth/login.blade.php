@@ -14,7 +14,7 @@
 
                     <h5 class="card-title text-center">{{ __('Login') }}</h5>
 
-                    <form method="POST" action="{{ route('login') }}" class=" ">
+                    <form method="POST" action="{{ route('login') }}" class="select-none">
                         @csrf
 
                         <!-- Email Address -->
@@ -46,17 +46,16 @@
                         <!-- Forgot Password Link -->
                         <div class="d-flex justify-content-between">
                             @if (Route::has('password.request'))
-                                <a class="text-muted text-decoration-none" href="{{ route('password.request') }}">
-                                    {{ __('Forgot your password?') }}
+                                <a class="text-muted" href="{{ route('password.request') }}">
+                                    Forgot your password?
                                 </a>
                             @endif
                             <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                         </div>
                     </form>
                     <div class="mt-4 text-center">
-                        Don't have an account?
                         <a class="text-muted " href="{{ route('register') }}">
-                            Register Here
+                            Don't have an account?
                         </a>
                     </div>
                 </div>
