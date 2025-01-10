@@ -31,20 +31,35 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => [
+                'required',
+                'string',
+                'in:' . implode(',', [
+                    User::ROLE_ADMIN,
+                    User::ROLE_LANDLORD,
+                    User::ROLE_TENANT,
+                ])
+            ],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if ($user->role === User::ROLE_LANDLORD) {
+            return redirect(route('landlord.dashboard', absolute: false));
+        }
+
+
+        return redirect(route('landlord.dashboard', absolute: false));
     }
 }
