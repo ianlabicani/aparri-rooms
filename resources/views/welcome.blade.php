@@ -19,7 +19,15 @@
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-    <h1>Hello World!</h1>
+    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="text-center">
+            <h1 class="display-4 text-primary">Welcome to Aparri Rooms</h1>
+            <p class="lead text-muted">Your one-stop platform for finding the best boarding houses in Aparri.</p>
+            <a href="{{ route('login') }}" class="btn btn-primary btn-lg mt-4">Login</a>
+            <a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg mt-4">Get Started</a>
+        </div>
+    </div>
+
 </body>
 
 </html>
