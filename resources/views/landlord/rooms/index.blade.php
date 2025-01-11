@@ -10,12 +10,11 @@
                 <i class="bi bi-plus-circle"></i> Add New Room
             </a>
         </div>
-        <!-- Example Room Card -->
+        <!-- Room Cards Loop -->
         @forelse ($rooms as $room)
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100">
                     <!-- Room Image -->
-
                     @if ($room->images->isNotEmpty())
                         <img src="{{ asset('storage/' . $room->images->first()->path) }}" alt="{{ $room->name }}"
                             class="card-img-top img-fluid" style="max-height: 200px; object-fit: cover;">
@@ -45,6 +44,10 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-center mt-5">
+                {{ $rooms->links('pagination::bootstrap-4') }}
+            </div>
+
         @empty
             <div class="col">
                 <div class="alert alert-info" role="alert">
