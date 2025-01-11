@@ -52,6 +52,12 @@ class User extends Authenticatable
         ];
     }
 
+    public function hasRole(string $role)
+    {
+        return $this->role === $role;
+    }
+
+
     public function rooms()
     {
         return $this->hasMany(Room::class);
