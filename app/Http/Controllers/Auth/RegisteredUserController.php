@@ -37,7 +37,6 @@ class RegisteredUserController extends Controller
                 'required',
                 'string',
                 'in:' . implode(',', [
-                    User::ROLE_ADMIN,
                     User::ROLE_LANDLORD,
                     User::ROLE_TENANT,
                 ])
@@ -55,11 +54,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        if ($user->role === User::ROLE_LANDLORD) {
-            return redirect(route('landlord.dashboard', absolute: false));
-        }
-
-
-        return redirect(route('landlord.dashboard', absolute: false));
+        return redirect(route('dashboard', absolute: false));
     }
 }
