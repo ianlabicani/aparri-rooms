@@ -25,7 +25,7 @@
                     <a class="nav-link" href="#">Tenants</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Rooms</a>
+                    <a class="nav-link" href="{{ route('landlord.rooms.index') }}">Rooms</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Payments</a>
