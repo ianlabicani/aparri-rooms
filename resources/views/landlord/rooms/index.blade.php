@@ -10,6 +10,17 @@
                 <i class="bi bi-plus-circle"></i> Add New Room
             </a>
         </div>
+        <div class="mb-4">
+            <a href="{{ route('landlord.rooms.all') }}"
+                class="btn btn-lg {{ request()->routeIs('landlord.rooms.all') ? 'btn-primary' : 'btn-secondary' }}">
+                <i class="bi bi-house-door"></i> All Rooms
+            </a>
+            <a href="{{ route('landlord.rooms.index') }}"
+                class="btn btn-lg {{ request()->routeIs('landlord.rooms.index') ? 'btn-primary' : 'btn-secondary' }}">
+                <i class="bi bi-person"></i> My Rooms
+            </a>
+        </div>
+
         <!-- Room Cards Loop -->
         @forelse ($rooms as $room)
             <div class="col-md-6 col-lg-4">
