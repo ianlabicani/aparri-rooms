@@ -50,7 +50,7 @@ class RoomController extends Controller
         $room->price = $validated['price'];
         $room->capacity = $validated['capacity'];
         $room->description = $validated['description'];
-        $room->amenities = $validated['amenities'];
+        $room->amenities = $validated['amenities'] ? array_map('trim', explode(',', $validated['amenities'])) : null;
         $room->status = $validated['status'];
         $room->save();
 
@@ -122,7 +122,7 @@ class RoomController extends Controller
         $room->price = $validated['price'];
         $room->capacity = $validated['capacity'];
         $room->description = $validated['description'];
-        $room->amenities = $validated['amenities'] ? explode(',', $validated['amenities']) : null;
+        $room->amenities = $validated['amenities'] ? array_map('trim', explode(',', $validated['amenities'])) : null;
         $room->status = $validated['status'];
         $room->save();
 
