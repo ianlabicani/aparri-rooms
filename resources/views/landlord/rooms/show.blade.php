@@ -80,17 +80,19 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="card-footer text-center">
-            <a href="{{ route('landlord.rooms.edit', $room->id) }}" class="btn btn-primary me-2">
-                Edit Room
-            </a>
-            <form action="{{ route('landlord.rooms.destroy', $room->id) }}" method="POST" class="d-inline"
-                onsubmit="return confirm('Are you sure you want to delete this room?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete Room</button>
-            </form>
-        </div>
+        @if (auth()->user()->id === $room->user_id)
+            <div class="card-footer text-center">
+                <a href="{{ route('landlord.rooms.edit', $room->id) }}" class="btn btn-primary me-2">
+                    Edit Room
+                </a>
+                <form action="{{ route('landlord.rooms.destroy', $room->id) }}" method="POST" class="d-inline"
+                    onsubmit="return confirm('Are you sure you want to delete this room?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete Room</button>
+                </form>
+            </div>
+        @endif
     </div>
 
 @endsection
