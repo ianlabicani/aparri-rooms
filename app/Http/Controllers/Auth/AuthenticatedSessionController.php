@@ -29,11 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if ($request->user()->role === User::ROLE_LANDLORD) {
-            return redirect()->intended(route('landlord.dashboard', absolute: false));
-        }
-
-        return redirect()->intended(route('welcome', absolute: false));
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
