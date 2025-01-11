@@ -14,8 +14,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = auth()->user()->rooms()->with('images')->get();
-        // dd($rooms);
+        // TODO: have an option to show all rooms
+        $rooms = auth()->user()->rooms()->with('images')->paginate(10);
         return view('landlord.rooms.index', compact('rooms'));
     }
 
