@@ -9,6 +9,7 @@ Route::prefix("landlord")->name('landlord.')->middleware(['auth', 'role:landlord
   })->name('dashboard');
 
   // rooms resource
+  Route::get('rooms/all', [RoomController::class, 'all'])->name('rooms.all');
   Route::resource('rooms', RoomController::class);
   Route::resource('room-images', RoomImageController::class);
 
