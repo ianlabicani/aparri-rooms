@@ -12,10 +12,16 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function all(Room $room)
+    {
+        $rooms = Room::with('images')->orderBy('created_at', 'desc')->paginate(10);
+        return view("landlord.rooms.index", compact("rooms"));
+    }
+
     public function index()
     {
         // TODO: have an option to show all rooms
-        $rooms = auth()->user()->rooms()->with('images')->paginate(10);
+        $rooms = auth()->user()->rooms()->with('images')->orderBy('created_at', 'desc')->paginate(10);
         return view('landlord.rooms.index', compact('rooms'));
     }
 
