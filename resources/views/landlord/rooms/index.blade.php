@@ -44,9 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-5">
-                {{ $rooms->links('pagination::bootstrap-4') }}
-            </div>
+
 
         @empty
             <div class="col">
@@ -56,5 +54,9 @@
                 </div>
             </div>
         @endforelse
+
+        <div class="d-flex justify-content-center mt-5">
+            {{ $rooms->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 @endsection
