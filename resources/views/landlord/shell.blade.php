@@ -17,7 +17,7 @@
 </head>
 
 <body class="bg-light">
-    @include('landlord.shared.navbar')
+    @include('landlord.partials.navbar')
     <main class="container py-5">
         @yield('content')
     </main>

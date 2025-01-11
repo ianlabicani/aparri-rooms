@@ -42,7 +42,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('icons/user.png') }}" alt="Profile" width="30" height="30"
                             class="rounded-circle">
-                        John Doe
+                        {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
