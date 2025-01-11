@@ -18,9 +18,12 @@
 
 <body class="bg-light">
     @include('landlord.shared.navbar')
-    <main class="container">
+    <main class="container py-5">
         @yield('content')
     </main>
+
+    @stack('scripts') <!-- This will render any scripts pushed to 'scripts' -->
+
 </body>
 
 </html>
