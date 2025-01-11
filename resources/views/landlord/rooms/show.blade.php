@@ -70,8 +70,9 @@
             </p>
             <p>
                 <strong>Amenities:</strong>
-                {{ $room->amenities ? implode(', ', array_column($room->amenities, 'name')) : 'No amenities available.' }}
+                {{ is_array($room->amenities) && count($room->amenities) > 0 ? implode(', ', $room->amenities) : 'No amenities available.' }}
             </p>
+
             <p>
                 <strong>Description:</strong><br>
                 {{ $room->description ?? 'No description available.' }}
