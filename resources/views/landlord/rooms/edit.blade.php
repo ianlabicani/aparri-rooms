@@ -109,6 +109,87 @@
                         </div>
                     @endif
                 </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <div id="map" style="height: 400px;"></div>
+                            <input type="hidden" id="latitude" name="latitude">
+                            <input type="hidden" id="longitude" name="longitude">
+                        </div>
+                        <div class="d-flex justify-content-between gap-2">
+                            <div class="mb-3 w-100">
+                                <label for="latitude_display" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" id="latitude_display" disabled>
+                            </div>
+                            <div class="mb-3 w-100">
+                                <label for="longitude_display" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="longitude_display" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="mb-3 h-75">
+                            <label for="location_description" class="form-label">Location Description</label>
+                            <textarea class="form-control h-100 no-resize" id="location_description" name="location_description" rows="5">{{ $room->location_description }}</textarea>
+                        </div>
+                        @push('styles')
+                            <style>
+                                .no-resize {
+                                    resize: none;
+                                }
+                            </style>
+                        @endpush
+                        @push('scripts')
+                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                            <script>
+                                // Initialize the map
+                                let latitude = {{ $room->latitude }};
+                                let longitude = {{ $room->longitude }};
+                                let map = L.map('map').setView([latitude, longitude], 13);
+                                var marker = L.marker([latitude, longitude], {
+                                    draggable: true
+                                }).addTo(map);
+
+                                // Add OpenStreetMap tiles
+                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                }).addTo(map);
+
+                                // Add a marker with drag functionality
+
+                                const position = marker.getLatLng();
+
+                                // Update hidden inputs when the marker is dragged
+                                marker.on('dragend', function(e) {
+                                    var position = marker.getLatLng();
+                                    document.getElementById('latitude').value = position.lat;
+                                    document.getElementById('longitude').value = position.lng;
+                                    var position = marker.getLatLng();
+                                    document.getElementById('latitude_display').value = position.lat;
+                                    document.getElementById('longitude_display').value = position.lng;
+
+                                });
+
+                                // Update marker when the map is clicked
+                                map.on('click', function(e) {
+                                    var position = e.latlng;
+                                    marker.setLatLng(position);
+                                    document.getElementById('latitude').value = position.lat;
+                                    document.getElementById('longitude').value = position.lng;
+                                });
+
+                                // Set default values for the hidden inputs
+                                document.getElementById('latitude').value = position.lat;
+                                document.getElementById('longitude').value = position.lng;
+                                document.getElementById('latitude_display').value = position.lat;
+                                document.getElementById('longitude_display').value = position.lng;
+                                console.log(position.lat, position.lng);
+                            </script>
+                        @endpush
+
+                    </div>
+                </div>
 
 
                 <!-- Submit Button -->
@@ -123,7 +204,8 @@
     </form>
 
     <!-- Delete Image Confirmation Modal -->
-    <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-labelledby="deleteImageModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteImageModal" tabindex="-1" aria-labelledby="deleteImageModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

@@ -1,5 +1,4 @@
 <!-- TODO: Fix styling -->
-
 @extends('landlord.shell')
 
 @section('content')
@@ -52,6 +51,57 @@
             <h5 class="text-center">Room Details</h5>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <div id="map" style="height: 400px;"></div>
+                        @push('scripts')
+                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                            <script>
+                                // Initialize the map
+                                var map = L.map('map')
+                                var marker = L.marker([18.356834, 121.637310], {}).addTo(map);
+                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                }).addTo(map);
+                                var latitude = {{ $room->latitude }};
+                                var longitude = {{ $room->longitude }};
+                                map.setView([latitude, longitude], 17);
+                                marker.setLatLng([latitude, longitude]);
+
+                                document.getElementById('latitude_display').value = latitude;
+                                document.getElementById('longitude_display').value = longitude;
+                            </script>
+                        @endpush
+
+                    </div>
+                    <div class="d-flex justify-content-between gap-2">
+                        <div class="mb-3 w-100">
+                            <label for="latitude_display" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" id="latitude_display" disabled>
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="longitude_display" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" id="longitude_display" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="mb-3 h-75">
+                        <label for="location_description" class="form-label">Location Description</label>
+                        <textarea class="form-control h-100 no-resize" id="location_description" rows="5" disabled>{{ $room->location_description }}</textarea>
+                    </div>
+                    @push('styles')
+                        <style>
+                            .no-resize {
+                                resize: none;
+                            }
+                        </style>
+                    @endpush
+                </div>
+            </div>
+
             <h2 class="card-title">{{ $room->name }}</h2>
             <p class="text-muted">
                 <strong>Room ID:</strong> {{ $room->id }}
