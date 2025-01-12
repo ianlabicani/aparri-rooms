@@ -46,8 +46,12 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'amenities' => 'nullable|string',
             'status' => 'required|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'location_description' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
 
         // Create new room record
         $room = new Room();
@@ -58,6 +62,9 @@ class RoomController extends Controller
         $room->description = $validated['description'];
         $room->amenities = $validated['amenities'] ? array_map('trim', explode(',', $validated['amenities'])) : null;
         $room->status = $validated['status'];
+        $room->latitude = $validated['latitude'];
+        $room->longitude = $validated['longitude'];
+        $room->location_description = $validated['location_description'];
         $room->save();
 
         // Handle multiple image uploads
@@ -107,12 +114,11 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-
         if ($room->user_id !== auth()->id()) {
             return redirect()->route('landlord.rooms.index')->with('error', 'You are not authorized to update this room.');
         }
 
-
+        // Validate the updated data including latitude and longitude
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
@@ -120,7 +126,10 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'amenities' => 'nullable|string',
             'status' => 'required|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'latitude' => 'required|numeric', // Validate latitude
+            'longitude' => 'required|numeric', // Validate longitude
+            'location_description' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image
         ]);
 
         // Update Room Details
@@ -130,15 +139,15 @@ class RoomController extends Controller
         $room->description = $validated['description'];
         $room->amenities = $validated['amenities'] ? array_map('trim', explode(',', $validated['amenities'])) : null;
         $room->status = $validated['status'];
+        $room->latitude = $validated['latitude'];
+        $room->longitude = $validated['longitude'];
+        $room->location_description = $validated['location_description'];
         $room->save();
 
-        // Handle Image Uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                // Store each image in the "public/room_images" directory
                 $path = $image->store('room_images', 'public');
 
-                // Create a new RoomImage record
                 $room->images()->create([
                     'path' => $path,
                 ]);

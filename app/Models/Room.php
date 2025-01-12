@@ -17,6 +17,9 @@ class Room extends Model
         'description',
         'status',
         'amenities',
+        'latitude',
+        'longitude',
+        'location_description'
     ];
 
     protected $casts = [
