@@ -52,6 +52,43 @@
             <h5 class="text-center">Room Details</h5>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        {{-- map --}}
+                        @include('shared.rooms.partials.room-map', [
+                            'latitude' => $room->latitude ?? 18.356834,
+                            'longitude' => $room->longitude ?? 121.63731,
+                        ])
+
+                    </div>
+                    <div class="d-flex justify-content-between gap-2">
+                        <div class="mb-3 w-100">
+                            <label for="latitude_display" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" id="latitude_display" disabled>
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="longitude_display" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" id="longitude_display" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="mb-3 h-75">
+                        <label for="location_description" class="form-label">Location Description</label>
+                        <textarea class="form-control h-100 no-resize" id="location_description" rows="5" disabled>{{ $room->location_description }}</textarea>
+                    </div>
+                    @push('styles')
+                        <style>
+                            .no-resize {
+                                resize: none;
+                            }
+                        </style>
+                    @endpush
+                </div>
+            </div>
+
             <h2 class="card-title">{{ $room->name }}</h2>
             <p class="text-muted">
                 <strong>Room ID:</strong> {{ $room->id }}
@@ -78,6 +115,5 @@
                 {{ $room->description ?? 'No description available.' }}
             </p>
         </div>
-    </div>
 
-@endsection
+    @endsection
